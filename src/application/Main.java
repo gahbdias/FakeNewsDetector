@@ -1,5 +1,4 @@
 package application;
-import br.ufrn.imd.modelo.BoatosReader;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
