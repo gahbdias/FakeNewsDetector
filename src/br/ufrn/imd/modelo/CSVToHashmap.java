@@ -1,28 +1,21 @@
-package br.ufrn.imd.controle;
+package br.ufrn.imd.modelo;
 
 import java.util.List;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import br.ufrn.imd.modelo.NoticiasHashmap;
-import br.ufrn.imd.modelo.StringProcessor;
-import br.ufrn.imd.modelo.CSVHandler;
-import br.ufrn.imd.modelo.Noticia;
-import br.ufrn.imd.modelo.SHAConverter;
-import br.ufrn.imd.controle.ToHashmapController;
-
-public class CSVToHashmapController extends ToHashmapController {
+public class CSVToHashmap extends ToHashmap {
 	
 	private NoticiasHashmap boatosCSV;
 	private List<Noticia> listaNoticias;
 	
-	public CSVToHashmapController() {
+	public CSVToHashmap() {
 		boatosCSV = new NoticiasHashmap();
 		listaNoticias = CSVHandler.csvToBean();
 	}
 	
 	@Override
-	public void processarTextos( int minLength ) {
+	public void processarTextos( Integer minLength ) {
 		for ( Noticia n : listaNoticias ) {
 			n.setTextoProcessado( StringProcessor.processString( n.getConteudo(), minLength ) );
 		}

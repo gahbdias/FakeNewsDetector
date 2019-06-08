@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="lib/OpenCSV/dependencies/commons-lang3-3.9.jar"/>
 	<classpathentry kind="lib" path="lib/OpenCSV/dependencies/commons-text-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/Jsoup/jsoup-1.12.1.jar"/>
+	<classpathentry kind="lib" path="lib/BrowserLauncher2/BrowserLauncher2-all-1_3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

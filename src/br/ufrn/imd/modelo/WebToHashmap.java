@@ -1,23 +1,17 @@
-package br.ufrn.imd.controle;
+package br.ufrn.imd.modelo;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 
-import br.ufrn.imd.modelo.Noticia;
-import br.ufrn.imd.modelo.NoticiasHashmap;
-import br.ufrn.imd.modelo.SHAConverter;
-import br.ufrn.imd.modelo.StringProcessor;
-import br.ufrn.imd.modelo.WebScraper;
-
-public class WebToHashmapController extends ToHashmapController {
+public class WebToHashmap extends ToHashmap {
 	
 	private NoticiasHashmap boatosMap;
 	private NoticiasHashmap bbcMap;
 	private List<Noticia> listaBoatos;
 	private List<Noticia> listaBBC;
 	
-	public WebToHashmapController() {
+	public WebToHashmap() {
 		boatosMap = new NoticiasHashmap();
 		bbcMap = new NoticiasHashmap();
 		listaBoatos = WebScraper.scrapBoatos();
@@ -25,7 +19,7 @@ public class WebToHashmapController extends ToHashmapController {
 	}
 
 	@Override
-	public void processarTextos( int minLength ) {
+	public void processarTextos( Integer minLength ) {
 		for ( Noticia n : listaBoatos ) {
 			n.setTextoProcessado( StringProcessor.processString( n.getConteudo(), minLength ) );
 		}		
@@ -34,7 +28,7 @@ public class WebToHashmapController extends ToHashmapController {
 		}
 	}
 	
-	public void criarBoatosHashmap(int minLength) {
+	public void criarBoatosHashmap( Integer minLength) {
 		System.out.println("Criando HashMap de https://www.boatos.org/...");
 		HashMap<String,Noticia> temp = new HashMap<String,Noticia>();
 		processarTextos(minLength);
@@ -50,7 +44,7 @@ public class WebToHashmapController extends ToHashmapController {
 		System.out.println("HashMap boatosMap criado com sucesso!");
 	}
 	
-	public void criarBBCHashmap(int minLength) {
+	public void criarBBCHashmap( Integer minLength) {
 		System.out.println("Criando HashMap de https://www.bbc.com/portuguese/brasil...");
 		HashMap<String,Noticia> temp = new HashMap<String,Noticia>();
 		

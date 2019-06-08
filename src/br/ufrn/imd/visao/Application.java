@@ -1,23 +1,20 @@
 package br.ufrn.imd.visao;
 import java.util.Scanner;
 
-import br.ufrn.imd.controle.CSVToHashmapController;
-import br.ufrn.imd.controle.WebToHashmapController;
-import br.ufrn.imd.controle.SimilaridadeController;
+import br.ufrn.imd.modelo.CSVToHashmap;
+import br.ufrn.imd.modelo.WebToHashmap;
+import br.ufrn.imd.controle.TelaSimilaridadeController;
 
 public class Application {
 	
 	public static void main(String[] args) {
-		System.out.println("########################");
-		System.out.println("### FakeNewsDetector ###");
-		System.out.println("########################");
-		System.out.println("Iniciando aplicação...");
-		System.out.println("");
-		CSVToHashmapController controladorCSV = new CSVToHashmapController();
-		WebToHashmapController controladorWeb = new WebToHashmapController();
+
+		//CSVToHashmap controladorCSV = new CSVToHashmap();
+		
+		WebToHashmap controladorWeb = new WebToHashmap();
 		System.out.println("");
 		
-		int minLength = lerMinLength();
+		//int minLength = lerMinLength();
 		
 		System.out.println("");		
 		controladorCSV.criarBoatosCSVHashmap( minLength );
@@ -31,12 +28,12 @@ public class Application {
 		
 		System.out.println("Iniciando análise de similaridade das noticias armazenadas...");
 		
-		SimilaridadeController comparadorBoatosxBoatos = 
-					new SimilaridadeController ( controladorWeb.getBoatosMap().getMapaNoticias(), controladorCSV.getBoatosCSV().getMapaNoticias() );
+		TelaSimilaridadeController comparadorBoatosxBoatos = 
+					new TelaSimilaridadeController ( controladorWeb.getBoatosMap().getMapaNoticias(), controladorCSV.getBoatosCSV().getMapaNoticias() );
 		comparadorBoatosxBoatos.compararMaps();
 		
-		SimilaridadeController comparadorBBCxBoatos = 
-				new SimilaridadeController ( controladorWeb.getBbcMap().getMapaNoticias(), controladorCSV.getBoatosCSV().getMapaNoticias() );
+		TelaSimilaridadeController comparadorBBCxBoatos = 
+				new TelaSimilaridadeController ( controladorWeb.getBbcMap().getMapaNoticias(), controladorCSV.getBoatosCSV().getMapaNoticias() );
 		comparadorBBCxBoatos.compararMaps();		
 	}
 	

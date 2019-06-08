@@ -8,11 +8,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
 
-public class SimilaridadeController {
+public class TelaSimilaridadeController {
 	public static HashMap<String,Noticia> webCompareTo;
 	public static HashMap<String,Noticia> CSVCompareTo;
 	
-	public SimilaridadeController( HashMap<String,Noticia> web , HashMap<String,Noticia> CSV ){
+	public TelaSimilaridadeController( HashMap<String,Noticia> web , HashMap<String,Noticia> CSV ){
 		webCompareTo = web;
 		CSVCompareTo = CSV;
 	}
