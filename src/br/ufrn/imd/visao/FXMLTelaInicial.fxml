@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minHeight="500.0" minWidth="500.0" styleClass="tela-inicial-border" stylesheets="@TelaInicialStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controle.TelaInicialController">
+<BorderPane minHeight="500.0" minWidth="500.0" styleClass="tela-inicial-border" stylesheets="@TelaInicialStyle.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="br.ufrn.imd.controle.TelaInicialController">
    <center>
       
    </center>
@@ -33,7 +33,7 @@
                   <Font size="11.0" />
                </font>
             </Label>
-            <Button fx:id="btMinLengthInputOK" layoutX="258.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicarbtMinLengthInputOK" text="OK" visible="false" />
+            <Button fx:id="btMinLengthInputOK" layoutX="258.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicarBtMinLengthInputOK" text="OK" visible="false" />
          </children>
       </Pane>
    </bottom>

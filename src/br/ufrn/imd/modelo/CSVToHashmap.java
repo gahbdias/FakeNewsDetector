@@ -4,7 +4,7 @@ import java.util.List;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-public class CSVToHashmap extends ToHashmap {
+public class CSVToHashmap {
 	
 	private NoticiasHashmap boatosCSV;
 	private List<Noticia> listaNoticias;
@@ -14,7 +14,6 @@ public class CSVToHashmap extends ToHashmap {
 		listaNoticias = CSVHandler.csvToBean();
 	}
 	
-	@Override
 	public void processarTextos( Integer minLength ) {
 		for ( Noticia n : listaNoticias ) {
 			n.setTextoProcessado( StringProcessor.processString( n.getConteudo(), minLength ) );

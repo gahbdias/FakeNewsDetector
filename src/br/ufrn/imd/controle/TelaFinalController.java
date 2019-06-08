@@ -11,17 +11,19 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 import java.util.HashMap;
-
 import br.ufrn.imd.modelo.CSVToHashmap;
 import br.ufrn.imd.modelo.Noticia;
 import br.ufrn.imd.controle.TelaWebScrapController;
 
-public class TelaInicialController {
+public class TelaFinalController {
 	
 	private CSVToHashmap HashmapCSVGen;
 	Integer minLength;	
 	
-	private static Stage inicialStage;
+	private boolean isFakeCosine;
+	private boolean isFakeLevenshtein;
+	
+	private static Stage finalStage;
 	private Scene webScraperScene;	
 	private BorderPane telaWebScraper;
 	
@@ -32,8 +34,10 @@ public class TelaInicialController {
 	@FXML private Button btMinLengthInputOK;
 	@FXML private Label legendaMinLengthInput;
 	
-	public void inicializarAtributosTelaInicial( Stage appStage ) {
-		inicialStage = appStage;
+	public void inicializarAtributosTelaFinal( Stage tSC, boolean iFC, boolean iFL ) {
+		finalStage = tSC;
+		isFakeCosine = iFC;
+		isFakeLevenshtein = iFL;
 	}
 	
 	public void clicarBtIniciar( ActionEvent event ) {
@@ -74,13 +78,13 @@ public class TelaInicialController {
 			
 			// Enviar dados
 			webScraperScene = new Scene( telaWebScraper );
-			inicialStage.setScene( webScraperScene );
+			finalStage.setScene( webScraperScene );
 			TelaWebScrapController secondScreen = loader.getController();
-			secondScreen.inicializarAtributosTelaWebScraper( inicialStage, minLength, hashmapBoatos );
+			secondScreen.inicializarAtributosTelaWebScraper( finalStage, minLength, hashmapBoatos );
 			
 			// Mostrar scene			
-			inicialStage.setScene( webScraperScene );
-			inicialStage.show();
+			finalStage.setScene( webScraperScene );
+			finalStage.show();
 			
 		} catch(Exception e) {
 			e.printStackTrace();

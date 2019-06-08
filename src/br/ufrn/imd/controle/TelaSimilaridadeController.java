@@ -2,78 +2,115 @@ package br.ufrn.imd.controle;
 
 import br.ufrn.imd.modelo.Noticia;
 import br.ufrn.imd.modelo.SimilaridadeCosine;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Slider;
+import javafx.stage.Stage;
+import br.ufrn.imd.Main;
 import br.ufrn.imd.modelo.DistanciaLevenshtein;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.HashMap;
 
 public class TelaSimilaridadeController {
-	public static HashMap<String,Noticia> webCompareTo;
-	public static HashMap<String,Noticia> CSVCompareTo;
 	
-	public TelaSimilaridadeController( HashMap<String,Noticia> web , HashMap<String,Noticia> CSV ){
-		webCompareTo = web;
-		CSVCompareTo = CSV;
+	private Noticia testNew;
+	private HashMap<String,Noticia> hashmapBoatos;
+	private double threshold;
+	private boolean isFakeCosine;
+	private boolean isFakeLevenshtein;
+	
+	@FXML private Button btBuscarSHA;
+	@FXML private Button btThresholdInput;
+	@FXML private Slider thresholdSlider;
+	@FXML private Label labelLevenshtein;
+	@FXML private Label labelCosine;
+	@FXML private Label labelSHA;
+	
+	
+	private static Stage similaridadeStage;
+	private Scene finalScene;	
+	private BorderPane telaFinal;	
+	
+	public void inicializarAtributosTelaSimilaridade( Stage wSS, HashMap<String,Noticia> hB, Noticia wSN ) {
+		similaridadeStage = wSS;
+		hashmapBoatos = hB;
+		testNew = wSN;
+		isFakeCosine = false;
+		isFakeLevenshtein = false;
 	}
 	
-	public void compararMaps() {
-		String url;
-		Map.Entry<String,Noticia> getURL = webCompareTo.entrySet().iterator().next();
-		Noticia element = getURL.getValue();
-		if( element.getLink().contains("boatos") ) {
-			url = "# BOATOS.ORG #";
+	public void clicarBtThresholdInput( ActionEvent event ) {
+		if( thresholdSlider == null ) {
+			threshold = 0;
+		}else { 
+			threshold = thresholdSlider.getValue();
 		}
-		else {
-			url = "# BBC BRASIL #";
-		}	
-				
-		for( Map.Entry<String,Noticia> entry : webCompareTo.entrySet() ) {
+		compararTestNew();
+	}	
+	
+	public void compararTestNew() {			
+			compararCosine( testNew.getConteudo() );
+			compararLevenshtein( testNew.getConteudo() );
 			System.out.println("");
-			System.out.println( "Buscando SHA compatível da noticia de id ["
-								+ entry.getValue().getId() 
-								+ "] do HashMap de " + url );
-			if( possuiSHAIgual( entry ) ) {
-				System.out.println( "A noticia de id ["
-									+ entry.getValue().getId() 
-									+ "] possui uma SHA igual a boatos.csv, logo é uma FAKE NEW!" );
-			}
-			else {
-				System.out.println( "A noticia de id ["
-									+ entry.getValue().getId() 
-									+ "] não possui uma SHA igual a boatos.csv. "
-									+ "Será necessário fazer uma análise de similaridade do conteúdo." );
-				compararCosine( entry.getValue().getConteudo() );
-				compararLevenshtein( entry.getValue().getConteudo() );
-				System.out.println("");
-			}
-		}
 	}
 	
-	private boolean possuiSHAIgual(Entry<String, Noticia> entry) {
-		boolean temSHAigual = false;
-		temSHAigual = CSVCompareTo.containsKey( entry.getKey() );
-		return temSHAigual;
-	}
-	
-	public static void compararCosine( String web ) {
+	public void compararCosine( String web ) {
 		double coeficienteSimilaridadeCosine = 0.0;
-		for( Map.Entry<String,Noticia> boato : CSVCompareTo.entrySet() ) {
+		for( Map.Entry<String,Noticia> boato : hashmapBoatos.entrySet() ) {
 			coeficienteSimilaridadeCosine = 
 					SimilaridadeCosine.calcularSimilaridadeCosine( web, boato.getValue().getConteudo() );	
 		}
-		System.out.println("O coeficiente de similaridade utilizando o algoritmo de similaridade Cosine é de: "
-				+ coeficienteSimilaridadeCosine);
+		if ( ( coeficienteSimilaridadeCosine * 100) >= threshold ) {
+			System.out.println( "O coeficiente de similaridade calculado utilizando o algoritmo de Cosine indica que a noticia é FALSA.");
+			System.out.println( "COSINE: " + coeficienteSimilaridadeCosine + " / THRESHOLD: " + threshold );
+		}
+		else {
+			System.out.println( "O coeficiente de similaridade calculado utilizando o algoritmo de Cosine indica que a noticia NÃO é falsa.");
+			System.out.println( "COSINE: " + coeficienteSimilaridadeCosine + " / THRESHOLD: " + threshold );
+		}
 	}
 	
 	public void compararLevenshtein( String web ) {
 		double coeficienteSimilaridadeLevenshtein = 0.0;
-		for( Map.Entry<String,Noticia> boato : CSVCompareTo.entrySet() ) {
+		for( Map.Entry<String,Noticia> boato : hashmapBoatos.entrySet() ) {
 			coeficienteSimilaridadeLevenshtein =
 					DistanciaLevenshtein.calcularSimilaridadeLevenshtein( web, boato.getValue().getConteudo() );	
 		}
-		System.out.println("O coeficiente de similaridade utilizando o algoritmo de Distancia de Levenshtein é de: "
-				+ coeficienteSimilaridadeLevenshtein);
+		if ( (coeficienteSimilaridadeLevenshtein * 100) >= threshold ) {
+			System.out.println( "O coeficiente de similaridade calculado utilizando Distancia de Levenshtein indica que a noticia é FALSA.");
+			System.out.println( "COSINE: " + coeficienteSimilaridadeLevenshtein + " / THRESHOLD: " + threshold );
+		}
+		else {
+			System.out.println( "O coeficiente de similaridade calculado utilizando Distancia de Levenshtein indica que a noticia NÃO é falsa.");
+			System.out.println( "COSINE: " + coeficienteSimilaridadeLevenshtein + " / THRESHOLD: " + threshold );
+		}
 	}
 
+	public void initTelaFinal() {
+		try {			
+			// Carregar FXML
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation( Main.class.getResource( "visao/FXMLTelaFinal.fxml" ) );
+			telaFinal = ( BorderPane ) loader.load();
+			
+			// Enviar dados
+			finalScene = new Scene( telaFinal );
+			similaridadeStage.setScene( finalScene );
+			TelaFinalController lastScreen = loader.getController();
+			lastScreen.inicializarAtributosTelaFinal( similaridadeStage, isFakeCosine, isFakeLevenshtein );
+						
+			// Mostrar scene			
+			similaridadeStage.setScene( finalScene );
+			similaridadeStage.show();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}		
+	}
 }

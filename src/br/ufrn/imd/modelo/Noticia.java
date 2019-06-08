@@ -1,11 +1,12 @@
 package br.ufrn.imd.modelo;
 
 public class Noticia {
-	private String textoProcessado;
+
 	private int id;
 	private String conteudo;
 	private String link;
 	private String timestamp;
+	private String textoProcessado;
 
 	public String getTextoProcessado() {
 		return textoProcessado;

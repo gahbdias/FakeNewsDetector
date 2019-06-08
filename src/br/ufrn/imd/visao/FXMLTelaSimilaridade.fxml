@@ -1,8 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane minHeight="500.0" minWidth="500.0" styleClass="tela-similaridade-border" stylesheets="@TelaSimilaridade.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controle.TelaWebScrapController">
-   
+<BorderPane minHeight="500.0" minWidth="500.0" styleClass="tela-similaridade-border" stylesheets="@TelaSimilaridadeStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controle.TelaSimilaridadeController">
+   <top>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="webscrap-logo" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../../../../../img/fakeNewsLogo.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="24.0" text="Tudo pronto, dataset carregado, noticia carregada... &#10;Chegou a hora de comparar!" textAlignment="CENTER">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="91.0" layoutY="54.0" prefHeight="51.0" prefWidth="318.0" text="Defina abaixo a porcentagem (0 a 100)&#10;de similaridade para definir noticia como fake." textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Slider layoutX="106.0" layoutY="105.0" prefHeight="15.0" prefWidth="288.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" />
+            <Label layoutX="78.0" layoutY="176.0" text="Quanto maior a porcentagem, &#10;menor a chance de o programa concluir que a noticia eh fake." textAlignment="CENTER">
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
+            <Button fx:id="btThresholdInput" layoutX="181.0" layoutY="142.0" mnemonicParsing="false" onAction="#clicarBtThresholdInput" text="Inserir threshold..." />
+            <Label fx:id="labelLevenshtein" layoutX="45.0" layoutY="229.0" text="Analisando similaridade - Distancia Levenshtein... " textFill="#015d16" visible="false">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelCosine" layoutX="101.0" layoutY="248.0" text="Analisando similaridade - Cosine... " textFill="#015d16" visible="false">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </center>
 </BorderPane>

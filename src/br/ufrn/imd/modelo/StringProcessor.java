@@ -13,16 +13,14 @@ public class StringProcessor {
 		
 		String result = inicial;
 		
-		result = result.trim();
-		
+		result = result.trim();		
 		result = removerNumeros( result );
 		result = removerAcentos ( result );
 		result = removerMaiusculas( result );
 		result = removerPontuacao( result );
 		result = removerPalavrasPequenas( result, minLength );
 		result = removerRepetidas( result );
-		result = organizarAlfabeticamente( result );
-		
+		result = organizarAlfabeticamente( result );		
 		result = result.trim();
 		
 		return result;
@@ -46,13 +44,8 @@ public class StringProcessor {
 	}
 	
 	public static String removerPontuacao( String comPontuacao ) {
-		String semPontuacao = comPontuacao.replaceAll("\\p{Punct}","");
-		semPontuacao = semPontuacao.replaceAll("“", "");
-		semPontuacao = semPontuacao.replaceAll("”", "");
-		semPontuacao = semPontuacao.replaceAll("–", "");
-		semPontuacao = semPontuacao.replaceAll("‘", "");
-		semPontuacao = semPontuacao.replaceAll("’", "");
-		semPontuacao = semPontuacao.replaceAll("°", "");
+		String semPontuacao = comPontuacao.replaceAll("/^[a-z]+$/", "");
+		semPontuacao = semPontuacao.replaceAll("\\p{Punct}", "");
 		return semPontuacao;
 	}
 	
