@@ -9,11 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
 import javafx.stage.Stage;
 import br.ufrn.imd.Main;
 import br.ufrn.imd.modelo.DistanciaLevenshtein;
-
 import java.util.Map;
 import java.util.HashMap;
 
@@ -22,74 +21,98 @@ public class TelaSimilaridadeController {
 	private Noticia testNew;
 	private HashMap<String,Noticia> hashmapBoatos;
 	private double threshold;
-	private boolean isFakeCosine;
-	private boolean isFakeLevenshtein;
+	
+	private double cosineResult;
+	private double levenshteinResult;
 	
 	@FXML private Button btBuscarSHA;
 	@FXML private Button btThresholdInput;
-	@FXML private Slider thresholdSlider;
-	@FXML private Label labelLevenshtein;
-	@FXML private Label labelCosine;
-	@FXML private Label labelSHA;
-	
+	@FXML private Spinner<Integer> thresholdInput;
+	@FXML private Label startAnalysisLabel;
+	@FXML private Label endAnalysisLabel;
 	
 	private static Stage similaridadeStage;
 	private Scene finalScene;	
 	private BorderPane telaFinal;	
 	
-	public void inicializarAtributosTelaSimilaridade( Stage wSS, HashMap<String,Noticia> hB, Noticia wSN ) {
-		similaridadeStage = wSS;
+	public void inicializarAtributosTelaSimilaridade( Stage cSSS, HashMap<String,Noticia> hB, Noticia wSN ) {
+		similaridadeStage = cSSS;
 		hashmapBoatos = hB;
 		testNew = wSN;
-		isFakeCosine = false;
-		isFakeLevenshtein = false;
 	}
 	
 	public void clicarBtThresholdInput( ActionEvent event ) {
-		if( thresholdSlider == null ) {
-			threshold = 0;
-		}else { 
-			threshold = thresholdSlider.getValue();
-		}
+		threshold = thresholdInput.getValue();
 		compararTestNew();
 	}	
 	
-	public void compararTestNew() {			
+	public void compararTestNew() {
+			startAnalysisLabel.setVisible(true);
+		
+			System.out.println("Iniciando Cosine...");
 			compararCosine( testNew.getConteudo() );
-			compararLevenshtein( testNew.getConteudo() );
+			System.out.println("Cosine concluido!");
 			System.out.println("");
+			
+			System.out.println("Iniciando Levenshtein...");
+			compararLevenshtein( testNew.getConteudo() );
+			System.out.println("Levenshtein concluido!");
+			
+			startAnalysisLabel.setVisible(false);
+			endAnalysisLabel.setVisible(true);
+			
+			initTelaFinal();
 	}
 	
 	public void compararCosine( String web ) {
-		double coeficienteSimilaridadeCosine = 0.0;
-		for( Map.Entry<String,Noticia> boato : hashmapBoatos.entrySet() ) {
-			coeficienteSimilaridadeCosine = 
-					SimilaridadeCosine.calcularSimilaridadeCosine( web, boato.getValue().getConteudo() );	
+		
+		cosineResult = 0.0;
+		double biggerCosine = 0.0;
+		
+		for( Map.Entry<String,Noticia> boato : hashmapBoatos.entrySet() ) {			
+			cosineResult = SimilaridadeCosine.calcularSimilaridadeCosine( web, boato.getValue().getConteudo() );
+			if ( cosineResult > biggerCosine ) {
+				biggerCosine = cosineResult;
+			}			
 		}
-		if ( ( coeficienteSimilaridadeCosine * 100) >= threshold ) {
+		
+		cosineResult = biggerCosine;
+		
+		
+		if ( ( cosineResult * 100) >= threshold ) {
 			System.out.println( "O coeficiente de similaridade calculado utilizando o algoritmo de Cosine indica que a noticia é FALSA.");
-			System.out.println( "COSINE: " + coeficienteSimilaridadeCosine + " / THRESHOLD: " + threshold );
+			System.out.println( "COSINE: " + cosineResult + " / THRESHOLD: " + threshold );
 		}
 		else {
 			System.out.println( "O coeficiente de similaridade calculado utilizando o algoritmo de Cosine indica que a noticia NÃO é falsa.");
-			System.out.println( "COSINE: " + coeficienteSimilaridadeCosine + " / THRESHOLD: " + threshold );
+			System.out.println( "COSINE: " + cosineResult + " / THRESHOLD: " + threshold );
 		}
+		
 	}
 	
 	public void compararLevenshtein( String web ) {
-		double coeficienteSimilaridadeLevenshtein = 0.0;
+		
+		levenshteinResult = 0.0;
+		double biggerLev = 0.0;
+		
 		for( Map.Entry<String,Noticia> boato : hashmapBoatos.entrySet() ) {
-			coeficienteSimilaridadeLevenshtein =
-					DistanciaLevenshtein.calcularSimilaridadeLevenshtein( web, boato.getValue().getConteudo() );	
+			levenshteinResult = DistanciaLevenshtein.calcularSimilaridadeLevenshtein( web, boato.getValue().getConteudo() );	
+			if ( levenshteinResult > biggerLev ) {
+				biggerLev = levenshteinResult;
+			}
 		}
-		if ( (coeficienteSimilaridadeLevenshtein * 100) >= threshold ) {
+		
+		levenshteinResult = biggerLev;
+		
+		if ( (levenshteinResult * 100) >= threshold ) {
 			System.out.println( "O coeficiente de similaridade calculado utilizando Distancia de Levenshtein indica que a noticia é FALSA.");
-			System.out.println( "COSINE: " + coeficienteSimilaridadeLevenshtein + " / THRESHOLD: " + threshold );
+			System.out.println( "LEVENSHTEIN: " + levenshteinResult + " / THRESHOLD: " + threshold );
 		}
 		else {
 			System.out.println( "O coeficiente de similaridade calculado utilizando Distancia de Levenshtein indica que a noticia NÃO é falsa.");
-			System.out.println( "COSINE: " + coeficienteSimilaridadeLevenshtein + " / THRESHOLD: " + threshold );
+			System.out.println( "LEVENSHTEIN: " + levenshteinResult + " / THRESHOLD: " + threshold );
 		}
+		
 	}
 
 	public void initTelaFinal() {
@@ -103,7 +126,11 @@ public class TelaSimilaridadeController {
 			finalScene = new Scene( telaFinal );
 			similaridadeStage.setScene( finalScene );
 			TelaFinalController lastScreen = loader.getController();
-			lastScreen.inicializarAtributosTelaFinal( similaridadeStage, isFakeCosine, isFakeLevenshtein );
+			
+			System.out.println("### COSINE: " + cosineResult );
+			System.out.println("### LEV: " + levenshteinResult );
+			
+			lastScreen.inicializarAtributosTelaFinal( cosineResult, levenshteinResult, threshold );
 						
 			// Mostrar scene			
 			similaridadeStage.setScene( finalScene );

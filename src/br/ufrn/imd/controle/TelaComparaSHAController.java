@@ -25,6 +25,7 @@ public class TelaComparaSHAController {
 	@FXML private Button btBuscarSHA;
 	@FXML private Button voltarParaWebscraper;
 	@FXML private Button btStartSimilaridade;
+	
 	@FXML private Label labelSHA;
 	@FXML private Label compatibleSHA;
 	@FXML private Label nonCompatibleSHA;
@@ -56,7 +57,7 @@ public class TelaComparaSHAController {
 								+ " não possui uma SHA igual a boatos.csv. \n"
 								+ "Será necessário fazer uma análise de similaridade do conteúdo." );
 			nonCompatibleSHA.setVisible(true);
-			btStartSimilaridade.setVisible(true);	
+			btStartSimilaridade.setVisible(true);
 		}
 	}
 	
@@ -64,28 +65,6 @@ public class TelaComparaSHAController {
 		boolean temSHAigual = false;
 		temSHAigual = hashmapBoatos.containsKey( entry );
 		return temSHAigual;
-	}
-	
-	public void initTelaSimilaridade() {
-		try {			
-			// Carregar FXML
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation( Main.class.getResource( "visao/FXMLTelaSimilaridade.fxml" ) );
-			telaSimilaridade = ( BorderPane ) loader.load();
-			
-			// Enviar dados
-			similaridadeScene = new Scene( telaSimilaridade );
-			comparaSHAStage.setScene( similaridadeScene );
-			TelaSimilaridadeController fourthScreen = loader.getController();
-			fourthScreen.inicializarAtributosTelaSimilaridade( comparaSHAStage, hashmapBoatos, testNew );
-						
-			// Mostrar scene			
-			comparaSHAStage.setScene( similaridadeScene );
-			comparaSHAStage.show();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}		
 	}
 
 	public void initTelaWebScrap() {
@@ -104,6 +83,30 @@ public class TelaComparaSHAController {
 			
 			// Mostrar scene			
 			comparaSHAStage.setScene( webScraperScene );
+			comparaSHAStage.show();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public void initTelaSimilaridade() {
+		
+		try {
+			// Carregar FXML
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation( Main.class.getResource( "visao/FXMLTelaSimilaridade.fxml" ) );
+			telaSimilaridade = (BorderPane) loader.load();
+			
+			// Enviar dados
+			similaridadeScene = new Scene( telaSimilaridade );
+			comparaSHAStage.setScene( similaridadeScene );
+			TelaSimilaridadeController forthScreen = loader.getController();
+			forthScreen.inicializarAtributosTelaSimilaridade( comparaSHAStage, hashmapBoatos, testNew );
+			System.out.println("Inicializando tela SIMILARIDADE");
+			
+			// Mostrar scene			
+			comparaSHAStage.setScene( similaridadeScene );
 			comparaSHAStage.show();
 			
 		} catch(Exception e) {

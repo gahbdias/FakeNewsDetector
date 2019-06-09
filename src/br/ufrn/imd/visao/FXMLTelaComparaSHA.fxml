@@ -39,19 +39,19 @@
                </font>
             </Label>
             <Label layoutX="186.0" layoutY="105.0" text="SHA da sua noticia:" />
-            <Button fx:id="btBuscarSHA" layoutX="212.0" layoutY="155.0" mnemonicParsing="false" onAction="#clicarBtBuscarSHA" text="Buscar..." />
-            <Label fx:id="compatibleSHA" layoutX="36.0" layoutY="204.0" text="O SHA da noticia foi encontrado no dataset, &#10;logo ela é uma FAKE NEW!!!" textAlignment="CENTER" textFill="RED" visible="false">
+            <Button fx:id="btBuscarSHA" layoutX="213.0" layoutY="176.0" mnemonicParsing="false" onAction="#clicarBtBuscarSHA" text="Buscar..." />
+            <Label fx:id="compatibleSHA" layoutX="35.0" layoutY="147.0" text="O SHA da noticia foi encontrado no dataset, &#10;logo ela é uma FAKE NEW!!!" textAlignment="CENTER" textFill="RED" visible="false">
                <font>
                   <Font name="System Bold Italic" size="17.0" />
                </font>
             </Label>
-            <Button fx:id="voltarParaWebscraper" layoutX="171.0" layoutY="255.0" mnemonicParsing="false" text="Testar outra noticia..." visible="false" />
-            <Label fx:id="nonCompatibleSHA" layoutX="4.0" layoutY="205.0" text="O SHA da noticia  nao foi encontrado no dataset, &#10;sera necessario realizar uma analise de similaridade..." textAlignment="CENTER" textFill="#004a21" visible="false">
+            <Button fx:id="voltarParaWebscraper" layoutX="178.0" layoutY="205.0" mnemonicParsing="false" onAction="#initTelaWebScrap" text="Testar outra noticia..." visible="false" />
+            <Label fx:id="nonCompatibleSHA" layoutX="4.0" layoutY="148.0" text="O SHA da noticia  nao foi encontrado no dataset, &#10;sera necessario realizar uma analise de similaridade..." textAlignment="CENTER" textFill="#004a21" visible="false">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <Button fx:id="btStartSimilaridade" onAction="#initTelaSimilaridade" layoutX="166.0" layoutY="255.0" mnemonicParsing="false" text="Analisar similaridade..." visible="false" />
+            <Button fx:id="btStartSimilaridade" layoutX="171.0" layoutY="218.0" mnemonicParsing="false" onAction="#initTelaSimilaridade" text="Analisar similaridade" visible="false" />
          </children>
       </Pane>
    </center>

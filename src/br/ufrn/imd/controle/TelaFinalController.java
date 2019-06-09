@@ -1,93 +1,44 @@
 package br.ufrn.imd.controle;
 
-import br.ufrn.imd.Main;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafx.scene.control.Label;
-import javafx.event.ActionEvent;
-import java.util.HashMap;
-import br.ufrn.imd.modelo.CSVToHashmap;
-import br.ufrn.imd.modelo.Noticia;
-import br.ufrn.imd.controle.TelaWebScrapController;
 
 public class TelaFinalController {
 	
-	private CSVToHashmap HashmapCSVGen;
-	Integer minLength;	
+	private double cosineResult;
+	private double levenshteinResult;
+	private double threshold;
 	
-	private boolean isFakeCosine;
-	private boolean isFakeLevenshtein;
-	
-	private static Stage finalStage;
-	private Scene webScraperScene;	
-	private BorderPane telaWebScraper;
-	
-	@FXML private Button btIniciar;	
 	@FXML private Label status;	
-	@FXML private Label msgInsertMinLength;	
-	@FXML private Spinner<Integer> minLengthInput;	
-	@FXML private Button btMinLengthInputOK;
-	@FXML private Label legendaMinLengthInput;
+	@FXML private Label nonFake;	
+	@FXML private Label isFake;	
+	@FXML private Label thresholdLabel;
+	@FXML private Label levenshteinValueLabel;
+	@FXML private Label cosineValueLabel;	
 	
-	public void inicializarAtributosTelaFinal( Stage tSC, boolean iFC, boolean iFL ) {
-		finalStage = tSC;
-		isFakeCosine = iFC;
-		isFakeLevenshtein = iFL;
+	public void inicializarAtributosTelaFinal( double cR, double lR, double thr ) {
+		cosineResult = cR;
+		levenshteinResult = lR;
+		threshold = thr;
+		
+		defineLabels();
 	}
 	
-	public void clicarBtIniciar( ActionEvent event ) {
-		status.setVisible(true);
-		HashmapCSVGen = new CSVToHashmap();
-		status.setText("Leitura concluída!");
-				
-		btIniciar.setVisible(false);
-		status.setVisible(false);
+	public void defineLabels() {
+		double levenshteinShow = levenshteinResult * 100;		
+		levenshteinValueLabel.setText( String.format("%.1f", levenshteinShow) + "%"  );
 		
-		msgInsertMinLength.setVisible(true);
-		minLengthInput.setVisible(true);
-		btMinLengthInputOK.setVisible(true);
-		legendaMinLengthInput.setVisible(true);
-	}
-	
-	public void clicarBtMinLengthInputOK( ActionEvent event ) {
-		minLength = minLengthInput.getValue();
-		HashmapCSVGen.criarBoatosCSVHashmap( minLength );
+		double cosineShow = cosineResult * 100;	
+		System.out.println("##### COSINE SHOW: " + cosineShow );
+		cosineValueLabel.setText( String.format("%.1f", cosineShow ) + "%"  );
 		
-		msgInsertMinLength.setVisible(false);
-		minLengthInput.setVisible(false);
-		btMinLengthInputOK.setVisible(false);
-		legendaMinLengthInput.setVisible(false);
+		thresholdLabel.setText("Threshold: " + threshold );
 		
-		initTelaWebScrap();
-	}
-	
-	public void initTelaWebScrap() {
-		
-		HashMap<String,Noticia> hashmapBoatos = HashmapCSVGen.getBoatosCSV().getMapaNoticias();
-		
-		try {
-			// Carregar FXML
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation( Main.class.getResource( "visao/FXMLTelaWebScrap.fxml" ) );
-			telaWebScraper = (BorderPane) loader.load();
-			
-			// Enviar dados
-			webScraperScene = new Scene( telaWebScraper );
-			finalStage.setScene( webScraperScene );
-			TelaWebScrapController secondScreen = loader.getController();
-			secondScreen.inicializarAtributosTelaWebScraper( finalStage, minLength, hashmapBoatos );
-			
-			// Mostrar scene			
-			finalStage.setScene( webScraperScene );
-			finalStage.show();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}		
-	}
+		if ( cosineShow > threshold || levenshteinShow > threshold ) {
+			isFake.setVisible(true);			
+		}
+		else {
+			nonFake.setVisible(true);
+		}
+	}	
 }

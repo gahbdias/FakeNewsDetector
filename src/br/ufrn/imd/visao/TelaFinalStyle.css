@@ -1,0 +1,9 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.tela-final-border{
+	-fx-background-color: #67c7bb;
+}
+
+.status {
+	-fx-text-alignment: center;
+}
