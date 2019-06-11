@@ -13,13 +13,6 @@ public class CSVToHashmap {
 		boatosCSV = new NoticiasHashmap();
 		listaNoticias = CSVHandler.csvToBean();
 	}
-	
-	public void processarTextos( Integer minLength ) {
-		for ( Noticia n : listaNoticias ) {
-			n.setTextoProcessado( StringProcessor.processString( n.getConteudo(), minLength ) );
-		}
-	}
-	
 	public void criarBoatosCSVHashmap(int minLength) {
 		System.out.println("Criando HashMap de boatos.csv...");
 		HashMap<String,Noticia> temp = new HashMap<String,Noticia>();
@@ -35,6 +28,11 @@ public class CSVToHashmap {
 		
 		boatosCSV.setMapaNoticias(temp);
 		System.out.println("HashMap boatosCSV criado com sucesso!");
+	}	
+	public void processarTextos( Integer minLength ) {
+		for ( Noticia n : listaNoticias ) {
+			n.setTextoProcessado( StringProcessor.processString( n.getConteudo(), minLength ) );
+		}
 	}
 	
 	public void imprimeBoatosCSV() {
@@ -59,4 +57,5 @@ public class CSVToHashmap {
 	public void setListaNoticias(List<Noticia> listaNoticias) {
 		this.listaNoticias = listaNoticias;
 	}
+	
 }

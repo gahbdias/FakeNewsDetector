@@ -23,7 +23,7 @@ public class CSVHandler {
 		} 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		List<Noticia> NoticiasLista = 
-			new CsvToBeanBuilder(csvReader).withType(Noticia.class).build().parse();
+			new CsvToBeanBuilder( csvReader ).withType(Noticia.class).build().parse();
 		
 		return NoticiasLista;
 	}

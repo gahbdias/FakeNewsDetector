@@ -6,7 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+//import javafx.scene.control.Label;
+import javafx.scene.text.Text;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Spinner;
@@ -28,8 +29,8 @@ public class TelaSimilaridadeController {
 	@FXML private Button btBuscarSHA;
 	@FXML private Button btThresholdInput;
 	@FXML private Spinner<Integer> thresholdInput;
-	@FXML private Label startAnalysisLabel;
-	@FXML private Label endAnalysisLabel;
+	@FXML private Text startAnalysisText;
+	@FXML private Text endAnalysisText;
 	
 	private static Stage similaridadeStage;
 	private Scene finalScene;	
@@ -39,6 +40,8 @@ public class TelaSimilaridadeController {
 		similaridadeStage = cSSS;
 		hashmapBoatos = hB;
 		testNew = wSN;
+		startAnalysisText.setVisible(false);
+		endAnalysisText.setVisible(false);
 	}
 	
 	public void clicarBtThresholdInput( ActionEvent event ) {
@@ -47,21 +50,21 @@ public class TelaSimilaridadeController {
 	}	
 	
 	public void compararTestNew() {
-			startAnalysisLabel.setVisible(true);
+		startAnalysisText.setVisible(true);
 		
-			System.out.println("Iniciando Cosine...");
-			compararCosine( testNew.getConteudo() );
-			System.out.println("Cosine concluido!");
-			System.out.println("");
+		System.out.println("Iniciando Cosine...");
+		compararCosine( testNew.getTextoProcessado() );
+		System.out.println("Cosine concluido!");
+		System.out.println("");
 			
-			System.out.println("Iniciando Levenshtein...");
-			compararLevenshtein( testNew.getConteudo() );
-			System.out.println("Levenshtein concluido!");
+		System.out.println("Iniciando Levenshtein...");
+		compararLevenshtein( testNew.getTextoProcessado() );
+		System.out.println("Levenshtein concluido!");
 			
-			startAnalysisLabel.setVisible(false);
-			endAnalysisLabel.setVisible(true);
+		startAnalysisText.setVisible(false);
+		endAnalysisText.setVisible(true);
 			
-			initTelaFinal();
+		initTelaFinal();
 	}
 	
 	public void compararCosine( String web ) {
@@ -70,7 +73,7 @@ public class TelaSimilaridadeController {
 		double biggerCosine = 0.0;
 		
 		for( Map.Entry<String,Noticia> boato : hashmapBoatos.entrySet() ) {			
-			cosineResult = SimilaridadeCosine.calcularSimilaridadeCosine( web, boato.getValue().getConteudo() );
+			cosineResult = SimilaridadeCosine.calcularSimilaridadeCosine( web, boato.getValue().getTextoProcessado() );
 			if ( cosineResult > biggerCosine ) {
 				biggerCosine = cosineResult;
 			}			
@@ -96,7 +99,7 @@ public class TelaSimilaridadeController {
 		double biggerLev = 0.0;
 		
 		for( Map.Entry<String,Noticia> boato : hashmapBoatos.entrySet() ) {
-			levenshteinResult = DistanciaLevenshtein.calcularSimilaridadeLevenshtein( web, boato.getValue().getConteudo() );	
+			levenshteinResult = DistanciaLevenshtein.calcularSimilaridadeLevenshtein( web, boato.getValue().getTextoProcessado() );	
 			if ( levenshteinResult > biggerLev ) {
 				biggerLev = levenshteinResult;
 			}

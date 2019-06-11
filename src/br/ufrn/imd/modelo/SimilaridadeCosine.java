@@ -5,13 +5,15 @@ import java.util.HashMap;
 
 public class SimilaridadeCosine {
 	
-	public static Map<CharSequence, Integer> construirMapaDeFrequenciaDosTermos(CharSequence[] termos) {
+	public static Map<CharSequence, Integer> construirMapaDeFrequenciaDosTermos
+	( CharSequence[] termos ) {
         Map<CharSequence, Integer> termFreqMap = new HashMap<>();
-        for (CharSequence term : termos) {
-            Integer n = termFreqMap.get(term);
-            n = (n == null) ? 1 : ++n;
+        for ( CharSequence term : termos ) {
+            Integer n = termFreqMap.get( term );
+            n = ( n == null ) ? 1 : ++n;
             termFreqMap.put(term, n);
         }
+        
         return termFreqMap;
     }
 	
@@ -24,9 +26,9 @@ public class SimilaridadeCosine {
         
         Map<CharSequence, Integer> boatosFreqMap = construirMapaDeFrequenciaDosTermos(boatosChar);
         Map<CharSequence, Integer> websFreqMap = construirMapaDeFrequenciaDosTermos(websChar);
-		
+
 		
 		CosineSimilarity cosineSimilarity = new CosineSimilarity();
-		return cosineSimilarity.cosineSimilarity(boatosFreqMap, websFreqMap);
+		return cosineSimilarity.cosineSimilarity( boatosFreqMap, websFreqMap );
 	}
 }

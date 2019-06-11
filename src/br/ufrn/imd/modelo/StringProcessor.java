@@ -30,25 +30,21 @@ public class StringProcessor {
 		String semNumeros = comNumeros.replaceAll("\\d","");
 		return semNumeros;
 	}
-	
 	public static String removerAcentos( String comAcentos ) {		
 		comAcentos = org.apache.commons.lang3.StringUtils.defaultString( comAcentos );
 	    String semAcentos = Normalizer.normalize( comAcentos, Normalizer.Form.NFD );
 	    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
 	    return pattern.matcher( semAcentos ).replaceAll("");
 	}
-	
 	public static String removerMaiusculas( String comMaiusculas ) {
 		String semMaiusculas = comMaiusculas.toLowerCase();			
 		return semMaiusculas;		
 	}
-	
 	public static String removerPontuacao( String comPontuacao ) {
 		String semPontuacao = comPontuacao.replaceAll("/^[a-z]+$/", "");
 		semPontuacao = semPontuacao.replaceAll("\\p{Punct}", "");
 		return semPontuacao;
 	}
-	
 	public static String removerPalavrasPequenas( String comPalavrasPequenas, int minLength ) {	
 		
 		StringTokenizer tokenizer = new StringTokenizer(comPalavrasPequenas, " ");
@@ -63,7 +59,6 @@ public class StringProcessor {
 		//keyboard.close();
 		return palavrasRemovidas.toString();
 	}
-	
 	public static String removerRepetidas( String comRepetidas ) {
 		String semRepetidas = comRepetidas;
 	      
@@ -71,7 +66,6 @@ public class StringProcessor {
 		
 		return semRepetidas;
 	}
-	
 	public static String organizarAlfabeticamente( String naoOrganizada ) {
 		String organizadaAlfabeticamente;
 		String[] strArray = naoOrganizada.split(" ");

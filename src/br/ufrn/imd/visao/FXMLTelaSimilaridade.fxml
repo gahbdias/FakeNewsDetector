@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane minHeight="500.0" minWidth="500.0" styleClass="tela-similaridade-border" stylesheets="@TelaSimilaridadeStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.controle.TelaSimilaridadeController">
    <top>
@@ -25,38 +26,24 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="33.0" layoutY="14.0" prefHeight="51.0" prefWidth="453.0" text="Defina abaixo a porcentagem (0 a 100)&#10;de similaridade para definir noticia como fake." textAlignment="CENTER">
+            <Label layoutX="33.0" layoutY="30.0" prefHeight="51.0" prefWidth="453.0" text="Defina abaixo a porcentagem (0 a 100)&#10;de similaridade para definir noticia como fake." textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
-            <Spinner fx:id="thresholdInput" layoutX="220.0" layoutY="75.0" minHeight="20.0" minWidth="30.0" prefHeight="30.0" prefWidth="60.0">
+            <Spinner fx:id="thresholdInput" layoutX="220.0" layoutY="100.0" minHeight="20.0" minWidth="30.0" prefHeight="30.0" prefWidth="60.0">
 	            <valueFactory>
 	       			<SpinnerValueFactory.IntegerSpinnerValueFactory amountToStepBy="5" initialValue="50" max="100" min="0" />
 	   			</valueFactory>
    			</Spinner>
-            <Label layoutX="78.0" layoutY="155.0" text="Quanto maior a porcentagem, &#10;menor a chance de o programa concluir que a noticia eh fake." textAlignment="CENTER">
+            <Label layoutX="78.0" layoutY="189.0" text="Quanto maior a porcentagem, &#10;menor a chance de o programa concluir que a noticia eh fake." textAlignment="CENTER">
                <font>
                   <Font size="11.0" />
                </font></Label>
-            <Button fx:id="btThresholdInput" layoutX="181.0" layoutY="117.0" mnemonicParsing="false" onAction="#clicarBtThresholdInput" text="Inserir threshold..." />
+            <Button fx:id="btThresholdInput" layoutX="181.0" layoutY="142.0" mnemonicParsing="false" onAction="#clicarBtThresholdInput" text="Inserir threshold..." />
+            <Text fx:id="startAnalysisText" layoutX="189.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciando analise..." />
+            <Text fx:id="endAnalysisText" layoutX="188.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analise concluida!!" />
          </children>
       </Pane>
    </center>
-   <bottom>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="startAnalysisLabel" layoutX="85.0" layoutY="140.0" text="Analisando similaridade... " textFill="#015d16" visible="false">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <Label fx:id="endAnalysisLabel" layoutX="107.0" layoutY="166.0" text="ANALISES CONCLUIDAS!" textFill="#0a0a0a" visible="false">
-               <font>
-                  <Font name="System Bold" size="21.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-   </bottom>
 </BorderPane>

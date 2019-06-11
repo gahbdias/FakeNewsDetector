@@ -8,8 +8,7 @@ import org.jsoup.select.Elements;
 import br.ufrn.imd.modelo.Noticia;
 import br.ufrn.imd.modelo.WebProcessor;
 
-public class WebScraper {
-	
+public class WebScraper {	
 	public static Noticia scrapBoatos( String urlString, Integer minLength ) {
 		System.out.println("Carregando noticia de " + urlString );
 		int id = 0;
@@ -36,7 +35,6 @@ public class WebScraper {
 	    
 	    return n;
 	  }
-	
 	public static Noticia scrapBBC( String urlString, Integer minLength ) {
 		System.out.println("Carregando noticia de " + urlString );
 		int id = 0;
